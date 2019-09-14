@@ -1,0 +1,49 @@
+body{
+	background-color: black;
+	text-align: left;
+	color: white;
+}
+h1{
+	text-align: center;
+	font-size: 64px;
+}
+h2{
+	font-size: 32px;
+	text-shadow: 4px 4px 2px black;
+}
+p{
+	font-size: 16px;
+	padding-top: 15px;
+}
+img{
+	width: 550px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+div{
+	height: 100px;
+	padding: 30px;
+}
+#red{
+	background-color: red;
+	text-align: right;
+}
+#blue{
+	background-color: blue;
+}
+#yellow{
+	background-color: yellow;
+	text-align: right;
+	color: black;
+}
+#yellow h2{
+	text-shadow: 4px 4px 2px grey;
+}
+#green{
+	background-color: green;
+}
+footer{
+	text-align: center;
+	padding-bottom: 15px;
+}
