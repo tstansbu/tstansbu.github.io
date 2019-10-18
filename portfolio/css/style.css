@@ -14,6 +14,7 @@ body {
         'banner banner banner banner banner'
         'home about game table concept';
     padding-bottom: 128px;
+    margin: 0px;
 }
 .banner {
     grid-area: banner;
