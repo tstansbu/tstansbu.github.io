@@ -1,0 +1,58 @@
+body {
+	font-family: 'Quicksand', sans-serif;
+	background-image: url("../images/map.png");
+	background-repeat: no-repeat;
+	background-color: #dddddd;
+}
+#menu {
+    width: 100%;
+    height: auto;
+}
+.menu-container {
+    display: grid;
+    grid-template-areas:
+        'banner banner banner banner banner'
+        'home about game table concept';
+    padding-bottom: 128px;
+}
+.banner {
+    grid-area: banner;
+}
+.home {
+    grid-area: home;
+}
+.about {
+    grid-area: about;
+}
+.game {
+    grid-area: game;
+}
+.table {
+    grid-area: table;
+}
+.concept {
+    grid-area: concept;
+}
+
+#main {
+    opacity: 0.9;
+    background-color: #ffffff;
+    margin: auto;
+    width: 80%;
+    height: 1200px;
+}
+
+h1 {
+    text-indent: 32px;
+    font-size: 64px;
+    background-color: #FFDAAA;
+    margin: auto;
+    width: 80%;
+    min-height: 128px;
+    border: 4px solid black;
+}
+p {
+    margin: 16px;
+    margin-top: 0px;
+    font-size: 24px;
+}
