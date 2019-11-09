@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Drawing Area</title>
+<!-- You can add your style here rather than in an external style sheet. -->
+<style>
+	canvas {
+	    border:5px solid #d3d3d3;
+	    background-color: #f1f1f1;
+	    display: block;
+	}
+</style>
+
+</head>
+<body>
+    <!-- DO NOT MODIFY THIS HTML -->
+    <canvas id = "myCanvas" width = "350" height = "500"  ></canvas>
+    <input type = "color" id = "picker"/>
+    
+    <script>
+     var canvas = document.getElementById('myCanvas');
+     canvas.width = window.innerWidth * 0.80;
+     canvas.height = window.innerHeight * 0.80;
+     var color = document.getElementById('picker');
+     var pause = false;
+     canvas.addEventListener('mousemove', function(evt) {
+        var out = canvas.getBoundingClientRect();
+        var context = canvas.getContext('2d');
+        var x = evt.clientX - out.left;
+        var y = evt.clientY - out.top;
+        
+        if(!pause) {
+            context.fillStyle = color.value;
+            context.strokeStyle = color.value;
+            context.beginPath();
+            context.arc(x, y, 10, 0, 2 * Math.PI);
+            context.stroke();
+            context.fill();
+            
+        }
+     }, false);
+     
+     
+     window.addEventListener('keydown', function(evt) {
+            if(evt.keyCode == 66) {
+                color.value = "#0000ff";
+            }
+            else if(evt.keyCode == 71) {
+                color.value = "#00ff00";
+            }
+            else if(evt.keyCode == 89) {
+                color.value = "#ffff00";
+            }
+            else if(evt.keyCode == 82) {
+                color.value = "#ff0000";
+            }
+            else if(evt.keyCode == 32) {
+                var context = canvas.getContext('2d');
+                context.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            else if(evt.keyCode == 38) {
+                pause = true;
+            }
+            else if(evt.keyCode == 40) {
+                pause = false;
+            }
+     }, false);
+     
+</script>
+</body>
+</html>
