@@ -80,11 +80,18 @@ iframe {
 }
 
 #main {
-    opacity: 0.9;
-    background-color: #ffffff;
+    background: rgba(255, 255, 255, 0.9);
     margin: auto;
     width: 80%;
     min-height: 600px;
+    padding-bottom: 80px;
+}
+
+#inner {
+    background: rgba(255, 255, 255, 1.0);
+    width: 80%;
+    min-height: 600px;
+    margin: auto;
     padding-bottom: 80px;
 }
 
@@ -101,7 +108,9 @@ h1 {
     padding: 32px;
 }
 h2 {
-    font-size: 32px;
+    font-size: 64px;
+    padding-top: 32px;
+    text-align: center;
 }
 p {
     margin: 16px;
