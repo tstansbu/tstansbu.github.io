@@ -152,9 +152,9 @@ function move(brw, bcm) {
     try {
         if(game[brw][bcm].see) {
             if(sel) {
-                if(bcm + 1 == game[brw].length){
+                if(bcm + 1 >= game[brw].length){
                     if(brw > 6 && brw < 11) {
-                        if(game[brw][bcm].sut == game[grw][gcm].sut && gcm + 1 == game[grw].length && game[grw][gcm].val == game[brw][bcm].val + 1) {
+                        if(game[brw][bcm].sut == game[grw][gcm].sut && gcm + 1 >= game[grw].length && game[grw][gcm].val == game[brw][bcm].val + 1) {
                             game[grw][gcm].slk = false;
                             game[brw].push(game[grw].pop());
                             sel = false;
@@ -163,11 +163,20 @@ function move(brw, bcm) {
                             cng = true;
                         }
                         else if(game[brw][bcm].val == 0 && game[grw][gcm].val == 1) {
-                            game[brw].pop();    
+                            game[brw].pop();
+                            
+                            game[grw][gcm].slk = false;
+                            game[brw].push(game[grw].pop());
+                            sel = false;
+                            grw = 0;
+                            gcm = 0;
+                            cng = true;
                         }
                     }
                     else if(game[brw][bcm].clr != game[grw][gcm].clr && game[brw][bcm].val == game[grw][gcm].val + 1) {
                         if(grw < 7) {
+                            game[grw][gcm].slk = false;
+                            
                             if(game[brw][bcm].val > 13 || game[brw][bcm].val < 1) {
                                 game[brw].pop();
                             }
@@ -180,7 +189,10 @@ function move(brw, bcm) {
                             }
                             cng = true;
                             
-                            if(game[grw].length == 0) {
+                            
+                            
+                            
+                            if(game[grw].length <= 0) {
                                 if(grw == 7) {
                                     game[grw][0] = {};
                                     game[grw][0].val = 0;
@@ -215,17 +227,21 @@ function move(brw, bcm) {
                                 }
                                 else {
                                     game[grw][0] = {};
-                                    game[grw][0].val = 0;
+                                    game[grw][0].val = 14;
                                     game[grw][0].clr = "none";
                                     game[grw][0].sut = "none";
                                     game[grw][0].slk = false;
                                     game[grw][0].see = true; 
                                 }
-                                
-                                
                             }
+                            
+                            sel = false;
+                            grw = 0;
+                            gcm = 0;
+                            cng = true;
                         }
                         else {
+                            game[grw][gcm].slk = false;
                             if(game[brw][bcm].val > 13) {
                                 game[brw].pop();
                             }
@@ -233,7 +249,12 @@ function move(brw, bcm) {
                             game[brw].push(game[grw].pop());
                             cng = true;
                             
-                            if(game[11].length == 0 && hand.length != 0) {
+                            sel = false;
+                            grw = 0;
+                            gcm = 0;
+                            cng = true;
+                            
+                            if(game[11].length <= 0 && hand.length != 0) {
                                 game[11].push(hand.pop());
                             }
                         }
@@ -249,11 +270,21 @@ function move(brw, bcm) {
                     cng = false;
                 }
             }
-            else if((brw < 11 && game[brw][bcm].val < 13 && game[brw][bcm].val > 0) || bcm + 1 == game[brw].length){
-                sel = true;
-                grw = brw;
-                gcm = bcm;
-                game[brw][bcm].slk = true;
+            else {
+                if(brw >= 11){
+                    if(bcm + 1 >= game[brw].length) {
+                        sel = true;
+                        grw = brw;
+                        gcm = bcm;
+                        game[brw][bcm].slk = true;
+                    }
+                }
+                else if(game[brw][bcm].val < 14 && game[brw][bcm].val > 0) {
+                    sel = true;
+                    grw = brw;
+                    gcm = bcm;
+                    game[brw][bcm].slk = true;
+                }
             }
         }
     }
@@ -344,17 +375,19 @@ function make() {
     stacks = [];
     for(i = 0; i < 7; i++) {
         stacks[i] = [];
+        s = 0;
         for(j = 0; j < game[i].length; j++) {
             try {
                 if(game[i][j].slk == true) {
-                    s = 0;
-                }
-                else {
                     s = -16;
                 }
             }
             catch(err) {
                 alert("I failed at " + i + " and " + j);
+            }
+            
+            if(j + 1 >= game[i].length) {
+                game[i][j].see = true;
             }
             
             stacks[i][j] = document.createElement("img");
@@ -372,20 +405,23 @@ function make() {
     
     goal = [];
     for(i = 0; i < 4; i++) {
-        if(game[i + 7][0].slk == true) {
-            s = 0;
+        j = i + 7;
+        var len = game[j].length - 1;
+        
+        if(game[j][len].slk == true) {
+            s = -16;
         }
         else {
-            s = -1;
+            s = 0;
         }
         
         goal[i] = document.createElement("img");
         goal[i].style.left = x + 16 + s + (54 * i) + "px";
         goal[i].style.top = y + 16 - s + "px";
-        ig = sprite(game[i + 7][0]);
+        ig = sprite(game[j][len]);
         goal[i].src = ig;
-        goal[i].dataset.i = i + 7;
-        goal[i].dataset.j = game[i + 7].length - 1;
+        goal[i].dataset.i = j;
+        goal[i].dataset.j = len;
         goal[i].onclick = function() {move(this.dataset.i, this.dataset.j)};
         goal[i].style.position = "absolute";
         board.appendChild(goal[i]);
@@ -394,10 +430,10 @@ function make() {
     plays = [];
     for(i = 0; i < game[11].length; i++) {
         if(game[11][i].slk == true) {
-            s = 0;
+            s = -16;
         }
         else {
-            s = -1;
+            s = 0;
         }
         plays[i] = document.createElement("img");
         plays[i].style.left = x + 236 + s + (25 * i) + "px";
